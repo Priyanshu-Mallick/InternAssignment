@@ -1,3 +1,5 @@
+
+import 'package:assignment/widgets/permission_list_item.dart';
 import 'package:flutter/material.dart';
 
 class AssignmentScreen extends StatefulWidget {
@@ -7,8 +9,7 @@ class AssignmentScreen extends StatefulWidget {
   State<AssignmentScreen> createState() => _AssignmentScreenState();
 }
 
-class _AssignmentScreenState extends State<AssignmentScreen>
-    with SingleTickerProviderStateMixin {
+class _AssignmentScreenState extends State<AssignmentScreen> with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
   @override
@@ -117,8 +118,7 @@ class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   double get maxExtent => _tabBar.preferredSize.height;
 
   @override
-  Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
+  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Container(
@@ -144,47 +144,13 @@ class PermissionsContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(16.0),
-      child: SingleChildScrollView(
+      padding: const EdgeInsets.all(16.0),
+      child: ListView.builder(
         physics: BouncingScrollPhysics(),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "General Permissions",
-              style: TextStyle(
-                fontSize: 17,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 16),
-            // Example list items, replace it with your actual data
-            PermissionListItem(name: "Ban Members"),
-            PermissionListItem(name: "Delete others Messages"),
-            PermissionListItem(name: "Pin Messages"),
-            PermissionListItem(name: "Create new Roles"),
-            PermissionListItem(name: "Edit Community Info"),
-            PermissionListItem(name: "Permission 3"),
-            PermissionListItem(name: "Permission 1"),
-            PermissionListItem(name: "Permission 2"),
-            PermissionListItem(name: "Permission 3"),
-            PermissionListItem(name: "Permission 1"),
-            PermissionListItem(name: "Permission 2"),
-            PermissionListItem(name: "Permission 3"),
-            PermissionListItem(name: "Permission 3"),
-            PermissionListItem(name: "Permission 1"),
-            PermissionListItem(name: "Permission 2"),
-            PermissionListItem(name: "Permission 3"),
-            PermissionListItem(name: "Permission 1"),
-            PermissionListItem(name: "Permission 2"),
-            PermissionListItem(name: "Permission 3"),
-            PermissionListItem(name: "Permission 3"),
-            PermissionListItem(name: "Permission 1"),
-            PermissionListItem(name: "Permission 2"),
-            PermissionListItem(name: "Permission 3"),
-            // Add more items as needed
-          ],
-        ),
+        itemCount: permissions.length,
+        itemBuilder: (context, index) {
+          return PermissionListItem(name: permissions[index]);
+        },
       ),
     );
   }
@@ -208,84 +174,29 @@ class MembersContent extends StatelessWidget {
   }
 }
 
-class PermissionListItem extends StatefulWidget {
-  final String name;
-
-  const PermissionListItem({required this.name});
-
-  @override
-  _PermissionListItemState createState() => _PermissionListItemState();
-}
-
-class _PermissionListItemState extends State<PermissionListItem> {
-  bool isSwitched = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            widget.name,
-            style: TextStyle(fontSize: 17, color: Colors.grey),
-          ),
-          GestureDetector(
-            onTap: () {
-              setState(() {
-                isSwitched = !isSwitched;
-              });
-            },
-            child: Container(
-              width: 60,
-              height: 30,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(30),
-                color: isSwitched ? Colors.blue : Colors.grey[350],
-                border: Border.all(
-                  color: isSwitched ? Colors.blue : Colors.grey[350]!,
-                  width: 2.0,
-                ),
-              ),
-              child: Stack(
-                children: [
-                  AnimatedPositioned(
-                    duration: Duration(milliseconds: 200),
-                    curve: Curves.easeIn,
-                    left: isSwitched ? 30 : 0,
-                    child: AnimatedSwitcher(
-                      duration: Duration(milliseconds: 200),
-                      transitionBuilder:
-                          (Widget child, Animation<double> animation) {
-                        return RotationTransition(
-                          child: child,
-                          turns: animation,
-                        );
-                      },
-                      child: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            isSwitched = !isSwitched;
-                          });
-                        },
-                        child: Center(
-                          child: Icon(
-                            isSwitched ? Icons.circle : Icons.circle,
-                            color: Colors.white,
-                            size: 26.0,
-                            key: ValueKey<bool>(isSwitched),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
+// Add your permission data
+List<String> permissions = [
+  "Ban Members",
+  "Delete others Messages",
+  "Pin Messages",
+  "Create new Roles",
+  "Edit Community Info",
+  "Permission 3",
+  "Permission 1",
+  "Permission 2",
+  "Permission 3",
+  "Permission 1",
+  "Permission 2",
+  "Permission 3",
+  "Permission 3",
+  "Permission 1",
+  "Permission 2",
+  "Permission 3",
+  "Permission 1",
+  "Permission 2",
+  "Permission 3",
+  "Permission 3",
+  "Permission 1",
+  "Permission 2",
+  "Permission 3",
+];
